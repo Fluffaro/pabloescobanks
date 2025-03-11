@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8d307fc-acd1-43d8-b499-1d2e871af094" name="Changes" comment="" />
+    <list default="true" id="f8d307fc-acd1-43d8-b499-1d2e871af094" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/controller/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/controller/TransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/controller/TransactionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/java/pabloescobanks/service/UserService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

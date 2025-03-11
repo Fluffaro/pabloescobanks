@@ -4,6 +4,7 @@ import com.java.pabloescobanks.entity.Account;
 import com.java.pabloescobanks.service.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -18,6 +19,7 @@ public class AccountController {
     // ✅ Create a new account for a user
     @PostMapping("/create/{userId}")
     public ResponseEntity<Account> createAccount(@PathVariable Long userId) {
+
         return ResponseEntity.ok(accountService.createAccount(userId));
     }
 
@@ -25,6 +27,12 @@ public class AccountController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<Account> getAccountByUserId(@PathVariable Long userId) {
         return ResponseEntity.ok(accountService.getAccountByUserId(userId));
+    }
+
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Account>> getAllAccounts() {
+        return ResponseEntity.ok(accountService.getAllAccounts());
     }
 
     // ✅ Deposit money into an account

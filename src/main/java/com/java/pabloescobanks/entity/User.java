@@ -3,6 +3,8 @@ package com.java.pabloescobanks.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
@@ -33,8 +35,9 @@ public class User {
     @Column(nullable = false)
     private Date birthday;
 
-    @Column(nullable = false)
-    private Integer mobile;
+    @Column(nullable = false, precision = 10, scale = 0)
+    private BigDecimal mobile;
+
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -48,7 +51,7 @@ public class User {
     @JsonManagedReference
     private Account account;
 
-    public User(String name, String username, String email, String password, Date birthday, Integer mobile, Date date_joined, String role) {
+    public User(String name, String username, String email, String password, Date birthday, BigDecimal mobile, Date date_joined, String role) {
         this.name = name;
         this.username = username;
         this.email = email;

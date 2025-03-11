@@ -8,6 +8,7 @@ import com.java.pabloescobanks.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -82,4 +83,27 @@ public class AccountService {
         account.setDateClosed(new Date());
         accountRepository.save(account);
     }
+
+    // In UserService
+    public User findUserByUsernameOrEmail(String identifier) {
+        if (identifier.contains("@")) {
+            return userRepository.findByEmail(identifier)
+                    .orElseThrow(() -> new AuthException("User not found"));
+        } else {
+            return userRepository.findByUsername(identifier)
+                    .orElseThrow(() -> new AuthException("User not found"));
+        }
+    }
+
+    public Account getAccountById(Long accountId) {
+        return accountRepository.findById(accountId)
+                .orElseThrow(() -> new AuthException("Account not found with id " + accountId));
+    }
+
+
+    public List<Account> getAllAccounts() {
+        return accountRepository.findAll();
+    }
+
+
 }

@@ -1,7 +1,11 @@
 package com.java.pabloescobanks.controller;
 
+import com.java.pabloescobanks.entity.Account;
 import com.java.pabloescobanks.entity.Transaction;
+import com.java.pabloescobanks.entity.User;
+import com.java.pabloescobanks.service.AccountService;
 import com.java.pabloescobanks.service.TransactionService;
+import com.java.pabloescobanks.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,19 +16,28 @@ import java.util.List;
 public class TransactionController {
 
     private final TransactionService transactionService;
-
-    public TransactionController(TransactionService transactionService) {
+    private final UserService userService;
+    private final AccountService accountService;
+    public TransactionController(TransactionService transactionService, UserService userService, AccountService accountService) {
         this.transactionService = transactionService;
+        this.userService = userService;
+        this.accountService = accountService;
     }
 
     // ✅ Transfer funds between accounts
     @PostMapping("/transfer")
     public ResponseEntity<Transaction> transferFunds(
             @RequestParam Long senderId,
-            @RequestParam Long receiverId,
+            @RequestParam Long receiverAccountId,
             @RequestParam Double amount) {
-        return ResponseEntity.ok(transactionService.transferFunds(senderId, receiverId, amount));
+        Account senderAccount = accountService.getAccountByUserId(senderId);
+        Account receiverAccount = accountService.getAccountById(receiverAccountId); // New method in AccountService
+        Transaction transaction = transactionService.transferFunds(senderAccount.getAId(), receiverAccount.getAId(), amount);
+        return ResponseEntity.ok(transaction);
     }
+
+
+
 
     // ✅ Fetch transaction history for an account
     @GetMapping("/account/{accountId}")

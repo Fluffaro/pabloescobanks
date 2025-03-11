@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public class UserService implements UserDetailsService {
 
     // ✅ Register a new user
     public User registerUser(String name, String username, String email, String password,
-                             Date birthday, Integer mobile, Date date_joined) {
+                             Date birthday, BigDecimal mobile, Date date_joined) {
         if (userRepository.findByUsername(username).isPresent()) {
             throw new AuthException("Username already exists");
         }
@@ -57,16 +58,16 @@ public class UserService implements UserDetailsService {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
-    // ✅ Load user details for Spring Security
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findUserByUsername(username);
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        User user = findUserByUsernameOrEmail(login);
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .roles(user.getRole()) // Use single role
+                .roles(user.getRole())
                 .build();
     }
+
 
     // ✅ Return a user's role
     public String getRole(String username) {
@@ -114,4 +115,15 @@ public class UserService implements UserDetailsService {
 
         userRepository.deleteById(id);
     }
+
+    public User findUserByUsernameOrEmail(String login) {
+        if (login.contains("@")) {
+            return userRepository.findByEmail(login)
+                    .orElseThrow(() -> new AuthException("User not found"));
+        } else {
+            return userRepository.findByUsername(login)
+                    .orElseThrow(() -> new AuthException("User not found"));
+        }
+    }
+
 }
