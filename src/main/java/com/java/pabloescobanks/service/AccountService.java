@@ -1,11 +1,13 @@
 package com.java.pabloescobanks.service;
 
 import com.java.pabloescobanks.entity.Account;
+import com.java.pabloescobanks.entity.Transaction;
 import com.java.pabloescobanks.entity.User;
 import com.java.pabloescobanks.exception.AuthException;
 import com.java.pabloescobanks.exception.DepositException;
 import com.java.pabloescobanks.exception.WithdrawException;
 import com.java.pabloescobanks.repository.AccountRepository;
+import com.java.pabloescobanks.repository.TransactionRepository;
 import com.java.pabloescobanks.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ import java.util.Optional;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
+    private final TransactionRepository transactionRepository;
 
-    public AccountService(AccountRepository accountRepository, UserRepository userRepository) {
+    public AccountService(AccountRepository accountRepository, UserRepository userRepository, TransactionRepository transactionRepository) {
         this.accountRepository = accountRepository;
         this.userRepository = userRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     // ✅ Create a new account for a user
@@ -60,6 +64,17 @@ public class AccountService {
         }
 
         account.setBalance(account.getBalance() + amount);
+
+        Transaction transaction = new Transaction();
+        transaction.setAmount(amount);
+        transaction.setDate(new Date());
+        transaction.setType("Deposit");
+        transaction.setReceiverAccount(null);
+        transaction.setSendingAccount(account);
+
+        transactionRepository.save(transaction);
+
+
         return accountRepository.save(account);
     }
 
@@ -76,6 +91,15 @@ public class AccountService {
         }
 
         account.setBalance(account.getBalance() - amount);
+
+        Transaction transaction = new Transaction();
+        transaction.setAmount(amount);
+        transaction.setDate(new Date());
+        transaction.setType("Withdraw");
+        transaction.setReceiverAccount(null);
+        transaction.setSendingAccount(account);
+
+        transactionRepository.save(transaction);
         return accountRepository.save(account);
     }
 

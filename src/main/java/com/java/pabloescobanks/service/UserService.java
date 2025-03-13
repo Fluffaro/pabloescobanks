@@ -34,15 +34,9 @@ public class UserService implements UserDetailsService {
             throw new AuthException("Email already exists");
         }
 
-        User user = new User();
-        user.setName(name);
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password)); // Encrypt password
-        user.setBirthday(birthday);
-        user.setMobile(mobile);
-        user.setDate_joined(date_joined);
-        user.setRole("USER"); // Default role
+
+        User user = new User(name, username, email, passwordEncoder.encode(password),
+                birthday, mobile, date_joined, "USER");
 
         return userRepository.save(user);
     }

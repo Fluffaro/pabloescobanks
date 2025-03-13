@@ -41,6 +41,70 @@ public class Account {
     @JsonBackReference
     private User user;
 
+    public Long getaId() {
+        return aId;
+    }
+
+    public void setaId(Long aId) {
+        this.aId = aId;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getDateClosed() {
+        return dateClosed;
+    }
+
+    public void setDateClosed(Date dateClosed) {
+        this.dateClosed = dateClosed;
+    }
+
+    public Date getDateExp() {
+        return dateExp;
+    }
+
+    public void setDateExp(Date dateExp) {
+        this.dateExp = dateExp;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Transaction> getSentTransactions() {
+        return sentTransactions;
+    }
+
+    public void setSentTransactions(List<Transaction> sentTransactions) {
+        this.sentTransactions = sentTransactions;
+    }
+
+    public List<Transaction> getReceivedTransactions() {
+        return receivedTransactions;
+    }
+
+    public void setReceivedTransactions(List<Transaction> receivedTransactions) {
+        this.receivedTransactions = receivedTransactions;
+    }
+
     // One-to-Many relationship with transactions where this account is the sender
     @OneToMany(mappedBy = "sendingAccount", cascade = CascadeType.ALL)
     @JsonManagedReference("account-sentTransactions") // ✅ Prevent recursion
