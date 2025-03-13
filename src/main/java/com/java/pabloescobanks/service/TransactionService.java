@@ -63,6 +63,12 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
+    /*
+    @Transactional
+    public Transaction depositFunds(){}
+
+     */
+
     // ✅ Fetch transaction history for an account
     public List<Transaction> getTransactionHistory(Long accountId) {
         Optional<Account> accountOpt = accountRepository.findById(accountId);
@@ -73,14 +79,9 @@ public class TransactionService {
 
         Account account = accountOpt.get();
 
-        List<Transaction> sentTransactions = transactionRepository.findBySendingAccount(account);
-        List<Transaction> receivedTransactions = transactionRepository.findByReceiverAccount(account);
+        List<Transaction> sentTransactions = transactionRepository.findAll();
 
-        // Combine sent and received transactions
-        sentTransactions.addAll(receivedTransactions);
 
-        // Sort transactions by date (most recent first)
-        sentTransactions.sort((t1, t2) -> t2.getDate().compareTo(t1.getDate()));
 
         return sentTransactions;
     }
@@ -92,7 +93,13 @@ public class TransactionService {
         if (accountOpt.isEmpty()) {
             throw new AuthException("User does not have an account.");
         }
+        Optional<Account> account = accountRepository.findById(userId);
 
-        return getTransactionHistory(accountOpt.get().getAId());
+
+        return transactionRepository.findBySendingAccount(account);
+    }
+
+    public List<Transaction> getAllTransactionHistory(){
+        return transactionRepository.findAll();
     }
 }
