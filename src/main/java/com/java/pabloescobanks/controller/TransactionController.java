@@ -32,7 +32,7 @@ public class TransactionController {
             @RequestParam Double amount) {
         Account senderAccount = accountService.getAccountByUserId(senderId);
         Account receiverAccount = accountService.getAccountById(receiverAccountId); // New method in AccountService
-        Transaction transaction = transactionService.transferFunds(senderAccount.getAId(), receiverAccount.getAId(), amount);
+        Transaction transaction = transactionService.transferFunds(senderAccount.getaId(), receiverAccount.getaId(), amount);
         return ResponseEntity.ok(transaction);
     }
 
@@ -49,5 +49,10 @@ public class TransactionController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Transaction>> getUserTransactionHistory(@PathVariable Long userId) {
         return ResponseEntity.ok(transactionService.getUserTransactionHistory(userId));
+    }
+
+    @GetMapping("/transaction")
+    public ResponseEntity<List<Transaction>> getAllTransactionHistory() {
+        return ResponseEntity.ok(transactionService.getAllTransactionHistory());
     }
 }
