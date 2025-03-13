@@ -3,6 +3,8 @@ package com.java.pabloescobanks.service;
 import com.java.pabloescobanks.entity.Account;
 import com.java.pabloescobanks.entity.User;
 import com.java.pabloescobanks.exception.AuthException;
+import com.java.pabloescobanks.exception.DepositException;
+import com.java.pabloescobanks.exception.WithdrawException;
 import com.java.pabloescobanks.repository.AccountRepository;
 import com.java.pabloescobanks.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -54,7 +56,7 @@ public class AccountService {
         Account account = getAccountByUserId(userId);
 
         if (amount <= 0) {
-            throw new IllegalArgumentException("Deposit amount must be greater than zero");
+            throw new DepositException("Deposit amount must be greater than zero");
         }
 
         account.setBalance(account.getBalance() + amount);
@@ -66,11 +68,11 @@ public class AccountService {
         Account account = getAccountByUserId(userId);
 
         if (amount <= 0) {
-            throw new IllegalArgumentException("Withdrawal amount must be greater than zero");
+            throw new WithdrawException("Withdrawal amount must be greater than zero");
         }
 
         if (account.getBalance() < amount) {
-            throw new IllegalArgumentException("Insufficient balance");
+            throw new WithdrawException("Insufficient balance");
         }
 
         account.setBalance(account.getBalance() - amount);

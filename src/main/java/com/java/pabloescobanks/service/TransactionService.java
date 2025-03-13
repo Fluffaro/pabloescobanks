@@ -3,6 +3,7 @@ package com.java.pabloescobanks.service;
 import com.java.pabloescobanks.entity.Account;
 import com.java.pabloescobanks.entity.Transaction;
 import com.java.pabloescobanks.exception.AuthException;
+import com.java.pabloescobanks.exception.TransferFundsException;
 import com.java.pabloescobanks.repository.AccountRepository;
 import com.java.pabloescobanks.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class TransactionService {
     @Transactional
     public Transaction transferFunds(Long senderId, Long receiverId, Double amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Transfer amount must be greater than zero.");
+            throw new TransferFundsException("Transfer amount must be greater than zero.");
         }
 
         Optional<Account> senderOpt = accountRepository.findById(senderId);
@@ -42,7 +43,7 @@ public class TransactionService {
 
         // Ensure sender has enough balance
         if (sender.getBalance() < amount) {
-            throw new IllegalArgumentException("Insufficient balance.");
+            throw new TransferFundsException("Insufficient balance.");
         }
 
         // Deduct from sender and add to receiver
