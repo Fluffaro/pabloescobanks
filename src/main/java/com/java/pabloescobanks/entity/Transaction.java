@@ -1,6 +1,7 @@
 package com.java.pabloescobanks.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
@@ -79,12 +80,12 @@ public class Transaction {
     // Many-to-One relationship with Account for the sender
     @ManyToOne
     @JoinColumn(name = "sending_acc")
-    @JsonBackReference("account-sentTransactions") // ✅ Prevent recursion
+    @JsonIgnoreProperties({"sentTransactions", "receivedTransactions", "user"})  // Prevent recursion but include account details
     private Account sendingAccount;
 
     // Many-to-One relationship with Account for the receiver
     @ManyToOne
     @JoinColumn(name = "receiver_acc")
-    @JsonBackReference("account-receivedTransactions") // ✅ Prevent recursion
+    @JsonIgnoreProperties({"sentTransactions", "receivedTransactions", "user"})  // Prevent recursion but include account details
     private Account receiverAccount;
 }
