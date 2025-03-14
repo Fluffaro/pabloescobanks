@@ -95,8 +95,8 @@ public class TransactionService {
                 .orElseThrow(() -> new AuthException("User does not have an account."));
 
         // Fetch transactions where the user is either sender or receiver
-        List<Transaction> sentTransactions = transactionRepository.findBySendingAccount(account);
-        List<Transaction> receivedTransactions = transactionRepository.findByReceiverAccount(account);
+        List<Transaction> sentTransactions = transactionRepository.findBySendingAccount(Optional.ofNullable(account));
+        List<Transaction> receivedTransactions = transactionRepository.findByReceiverAccount(Optional.ofNullable(account));
 
         // Combine both lists
         List<Transaction> allTransactions = new ArrayList<>();
