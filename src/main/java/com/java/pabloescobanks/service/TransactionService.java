@@ -100,6 +100,18 @@ public class TransactionService {
         return transactionRepository.findBySendingAccount(account);
     }
 
+    public List<Transaction> getUserReceivingTransactionHistory(Long userId) {
+        Optional<Account> accountOpt = accountRepository.findByUser_uId(userId);
+
+        if (accountOpt.isEmpty()) {
+            throw new AuthException("User does not have an account.");
+        }
+        Optional<Account> account = accountRepository.findById(userId);
+
+
+        return transactionRepository.findByReceiverAccount(account);
+    }
+
     public List<Transaction> getAllTransactionHistory(){
         return transactionRepository.findAll();
     }

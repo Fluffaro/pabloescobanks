@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     List<Transaction> findBySendingAccount(Optional<Account> sendingAccount);
-    List<Transaction> findByReceiverAccount(Account receiverAccount);
+    List<Transaction> findByReceiverAccount(Optional<Account> receiverAccount);
 
 
 }
