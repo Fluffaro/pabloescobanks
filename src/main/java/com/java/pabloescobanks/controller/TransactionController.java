@@ -39,11 +39,14 @@ public class TransactionController {
 
 
 
+    /*
     // ✅ Fetch transaction history for an account
     @GetMapping("/account/{accountId}")
     public ResponseEntity<List<Transaction>> getTransactionHistory(@PathVariable Long accountId) {
         return ResponseEntity.ok(transactionService.getTransactionHistory(accountId));
     }
+
+     */
 
     // ✅ Fetch transaction history for a user (by user ID)
     @GetMapping("/user/{userId}")

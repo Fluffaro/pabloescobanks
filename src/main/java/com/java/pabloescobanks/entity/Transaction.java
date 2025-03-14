@@ -80,12 +80,12 @@ public class Transaction {
     // Many-to-One relationship with Account for the sender
     @ManyToOne
     @JoinColumn(name = "sending_acc")
-    @JsonIgnoreProperties({"sentTransactions", "receivedTransactions", "user"})  // Prevent recursion but include account details
+    @JsonIgnoreProperties({"sentTransactions", "receivedTransactions", "user"})  // Prevent recursion but include account details  // Prevent recursion but include account details
     private Account sendingAccount;
 
     // Many-to-One relationship with Account for the receiver
     @ManyToOne
     @JoinColumn(name = "receiver_acc")
-    @JsonIgnoreProperties({"sentTransactions", "receivedTransactions", "user"})  // Prevent recursion but include account details
+    @JsonIgnoreProperties({"sentTransactions", "receivedTransactions", "user"})  // Prevent recursion but include account details  // Prevent recursion but include account details
     private Account receiverAccount;
 }
