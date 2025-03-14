@@ -28,8 +28,17 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+
+        User temporaryUser = new User();
+        temporaryUser.setName(userRepository.findById(id).get().getName());
+        temporaryUser.setEmail(userRepository.findById(id).get().getEmail());
+        temporaryUser.setMobile(userRepository.findById(id).get().getMobile());
+        temporaryUser.setBirthday(userRepository.findById(id).get().getBirthday());
+        temporaryUser.setRole(userRepository.findById(id).get().getRole());
+        temporaryUser.setUsername(userRepository.findById(id).get().getUsername());
+        temporaryUser.setDate_joined(userRepository.findById(id).get().getDate_joined());
+
+        return ResponseEntity.ok(temporaryUser);
     }
 
     // Update user details
@@ -54,4 +63,6 @@ public class UserController {
         }
         return ResponseEntity.notFound().build();
     }
+
+
 }
