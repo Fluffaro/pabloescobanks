@@ -1,6 +1,7 @@
 package com.java.pabloescobanks.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,6 +41,16 @@ public class Account {
     @JoinColumn(name = "user_uId", unique = true)
     @JsonBackReference
     private User user;
+
+    // One-to-Many relationship with transactions where this account is the sender
+    @OneToMany(mappedBy = "sendingAccount", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Transaction> sentTransactions;
+
+    // One-to-Many relationship with transactions where this account is the receiver
+    @OneToMany(mappedBy = "receiverAccount", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Transaction> receivedTransactions;
 
     public Long getaId() {
         return aId;
@@ -105,13 +116,5 @@ public class Account {
         this.receivedTransactions = receivedTransactions;
     }
 
-    // One-to-Many relationship with transactions where this account is the sender
-    @OneToMany(mappedBy = "sendingAccount", cascade = CascadeType.ALL)
-    @JsonManagedReference("account-sentTransactions") // ✅ Prevent recursion
-    private List<Transaction> sentTransactions;
 
-    // One-to-Many relationship with transactions where this account is the receiver
-    @OneToMany(mappedBy = "receiverAccount", cascade = CascadeType.ALL)
-    @JsonManagedReference("account-receivedTransactions") // ✅ Prevent recursion
-    private List<Transaction> receivedTransactions;
 }
