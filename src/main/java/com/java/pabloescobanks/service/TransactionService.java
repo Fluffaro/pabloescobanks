@@ -9,9 +9,11 @@ import com.java.pabloescobanks.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Comparator;
 
 @Service
 public class TransactionService {
@@ -87,17 +89,24 @@ public class TransactionService {
         return sentTransactions;
     }
 
-    // ✅ Fetch transaction history for a user
     public List<Transaction> getUserTransactionHistory(Long userId) {
-        Optional<Account> accountOpt = accountRepository.findByUser_uId(userId);
+        // Fetch the account associated with the user
+        Account account = accountRepository.findByUser_uId(userId)
+                .orElseThrow(() -> new AuthException("User does not have an account."));
 
-        if (accountOpt.isEmpty()) {
-            throw new AuthException("User does not have an account.");
-        }
-        Optional<Account> account = accountRepository.findById(userId);
+        // Fetch transactions where the user is either sender or receiver
+        List<Transaction> sentTransactions = transactionRepository.findBySendingAccount(account);
+        List<Transaction> receivedTransactions = transactionRepository.findByReceiverAccount(account);
 
+        // Combine both lists
+        List<Transaction> allTransactions = new ArrayList<>();
+        allTransactions.addAll(sentTransactions);
+        allTransactions.addAll(receivedTransactions);
 
-        return transactionRepository.findBySendingAccount(account);
+        // ✅ Sort by transaction date (assuming `createdAt` field exists)
+        return allTransactions.stream()
+                .sorted(Comparator.comparing(Transaction::getDate).reversed()) // Descending order (latest first)
+                .toList();
     }
 
     public List<Transaction> getAllTransactionHistory(){
