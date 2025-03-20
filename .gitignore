@@ -2,3 +2,5 @@
 .idea/workspace.xml
 .gradle/8.12.1/checksums/checksums.lock
 .gradle/8.12.1/checksums/sha1-checksums.bin
+.env
+src/main/resources/.env
